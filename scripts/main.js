@@ -35,6 +35,45 @@ let addNewDiv = (id, parentId, user, time, comment, like) => {
                           Share
                         </span>
                         </div>
+                        <div id="replies-for-${id}"> </div>
+                    </div>
+                </div>`;
+
+	referenceNode.after(newNode);
+};
+
+let addNewReply = (id, parentId, user, time, comment, like) => {
+	var referenceNode = document.getElementById(parentId);
+	var newNode = document.createElement('div');
+	newNode.id = 'comment-' + divCount;
+	divCount++;
+	newNode.innerHTML = `            
+			<div class="col-sm-12 margin-bottom-30">
+                    <div class="col-sm-1">
+                        <img src="images/boy.svg" class="user-photo">
+                    </div>
+                    <div class="col-sm-11">
+                        <span class="user-name">
+                        ${user}
+                    </span>
+                        <span class="time-ago">
+                      ${time}
+                    </span>
+                        <div class="col-sm-12 padding-0">
+                            ${comment}
+                        </div>
+                        <div class="col-sm-12 padding-0 details margin-top-10">
+                            <span id="like-count-for-${id}">${like}</span>
+                            <img src="images/up-arrow.svg" class="vote margin-right-10 cursor-pointer" onClick="like(${id},true)">
+                            <img src="images/down-arrow.svg" class="vote margin-right-20 cursor-pointer" onClick="like(${id},false)">
+                            <span class="margin-right-20 cursor-pointer" onClick="reply(${id})">
+                          Reply
+                        </span>
+                            <span class="margin-right-20 cursor-pointer">
+                          Share
+                        </span>
+                        </div>
+                        <div id="replies-for-${id}"> </div>
                     </div>
                 </div>`;
 
@@ -92,8 +131,14 @@ let getComments = () => {
 
 		console.log(timeSince(Date.parse(obj.time)));
 
-
-		addNewDiv(i + 1, 'comments-section', obj.user, timeSince(Date.parse(obj.time)), obj.comment, obj.like);
+		addNewDiv(
+			i + 1,
+			'comments-section',
+			obj.user,
+			timeSince(Date.parse(obj.time)),
+			obj.comment,
+			obj.like
+		);
 	}
 };
 
@@ -106,7 +151,8 @@ let like = (id, isLike) => {
 	if (isLike) {
 		likeItem.innerHTML = parseInt(likeItem.innerHTML) + 1;
 	} else {
-		likeItem.innerHTML = parseInt(likeItem.innerHTML) > 0 ?  parseInt(likeItem.innerHTML) - 1 : 0;
+		likeItem.innerHTML =
+			parseInt(likeItem.innerHTML) > 0 ? parseInt(likeItem.innerHTML) - 1 : 0;
 	}
 
 	let dataArray = [];
@@ -133,8 +179,22 @@ let like = (id, isLike) => {
 	}
 };
 
-let reply = (id) => {
+let reply = id => {
 	console.log(id);
-}
+	let referenceNode = document.getElementById('replies-for-' + id);
+	var newNode = document.createElement('div');
+	newNode.id = 'reply-input-details' + divCount;
+	newNode.innerHTML = `            
+			<div class="col-sm-12 margin-top-10 margin-bottom-10 padding-left-0">
+                <div class="col-sm-8 margin-bottom-10 padding-left-0">
+                    <input id="reply-input" type="text" class="form-control" placeholder="Enter your reply...">
+                </div>
+                <div class="col-sm-4 margin-bottom-10">
+                    <button id="submit-reply" type="button" class="btn btn-info" onClick="submitReply()">Submit</button>
+                </div>
+            </div>`;
+
+	referenceNode.after(newNode);
+};
 
 getComments();
