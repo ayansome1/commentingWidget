@@ -1,5 +1,3 @@
-let submitMainComment = document.getElementById('submit-main-comment');
-let userNameMainComment = document.getElementById('main-commenter-name');
 let divCount = 1;
 
 let addNewDiv = (id, parentId, user, time, comment, like, addedNow) => {
