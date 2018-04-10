@@ -341,3 +341,23 @@
   padding: 0px;
 }
 
+.user-name {
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+.time-ago {
+	font-size: 12px;
+	color: lightgrey;
+}
+
+.vote {
+	height: 15px;
+	width: 15px;
+}
+
+.details {
+	color: #777;
+	font-size: 12px;
+}
+
