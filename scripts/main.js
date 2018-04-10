@@ -87,7 +87,13 @@ let getComments = () => {
 		console.log(obj);
 		obj = JSON.parse(obj);
 		console.log(obj.user);
-		addNewDiv(i + 1, 'comments-section', obj.user, obj.time, obj.comment, obj.like);
+		// console.log(obj.time);
+		console.log(Date.parse(obj.time));
+
+		console.log(timeSince(Date.parse(obj.time)));
+
+
+		addNewDiv(i + 1, 'comments-section', obj.user, timeSince(Date.parse(obj.time)), obj.comment, obj.like);
 	}
 };
 
