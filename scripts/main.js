@@ -41,7 +41,7 @@ let addNewDiv = (parentId, user, time, comment, like) => {
 	referenceNode.after(newNode);
 };
 
-let submitNewComment = userName => {
+let submitNewComment = () => {
 	let comment = document.getElementById('main-comment').value;
 
 	let user = window.localStorage.getItem('userName');
@@ -51,18 +51,43 @@ let submitNewComment = userName => {
 	// let commentsSectionNode = document.getElementById("comments-section");
 	// objTo.appendChild(divtest);
 	let data = window.localStorage.getItem('data');
-	if(!data){
-		data = [];
+
+	let dataArray = [];
+
+	console.log(data);
+	if (!data) {
+		dataArray = [];
+	} else {
+		dataArray = JSON.parse(data);
 	}
 	let time = new Date();
-	let obj = { id: data.length + 1, user: user, comment: comment, time: time, like: 0 };
-	data.push(obj);
+	let obj = { id: dataArray.length + 1, user: user, comment: comment, time: time, like: 0 };
+	dataArray.push(JSON.stringify(obj));
+	console.log(dataArray);
+	window.localStorage.setItem('data', JSON.stringify(dataArray) );
 
 	console.log(comment, user);
 	addNewDiv('comments-section', user, time, comment, 0);
+	// let user = window.localStorage.setItem('data': data);
 };
 
 let setUserName = () => {
 	userName = document.getElementById('user-name').value;
 	window.localStorage.setItem('userName', userName);
 };
+
+let getComments = () => {
+	let data = window.localStorage.getItem('data');
+	let dataArray = [];
+	if (data) {
+		dataArray = JSON.parse(data);
+	}
+	for (let i=0 ; i<dataArray.length;i++) {
+		let obj = dataArray[i];
+		obj = JSON.parse(obj);
+		console.log(obj.user);
+		addNewDiv('comments-section', obj.user, obj.time, obj.comment, 0);
+	}
+};
+
+getComments();
