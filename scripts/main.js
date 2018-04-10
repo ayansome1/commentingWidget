@@ -28,10 +28,10 @@ let addNewDiv = (id, parentId, user, time, comment, like) => {
                             <span id="like-count-for-${id}">${like}</span>
                             <img src="images/up-arrow.svg" class="vote margin-right-10 cursor-pointer" onClick="like(${id},true)">
                             <img src="images/down-arrow.svg" class="vote margin-right-20 cursor-pointer" onClick="like(${id},false)">
-                            <span class="margin-right-20">
+                            <span class="margin-right-20 cursor-pointer">
                           Reply
                         </span>
-                            <span class="margin-right-20">
+                            <span class="margin-right-20 cursor-pointer">
                           Share
                         </span>
                         </div>
