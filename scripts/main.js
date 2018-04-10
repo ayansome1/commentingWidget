@@ -100,7 +100,7 @@ let like = (id, isLike) => {
 	if (isLike) {
 		likeItem.innerHTML = parseInt(likeItem.innerHTML) + 1;
 	} else {
-		likeItem.innerHTML = parseInt(likeItem.innerHTML) - 1;
+		likeItem.innerHTML = parseInt(likeItem.innerHTML) > 0 ?  parseInt(likeItem.innerHTML) - 1 : 0;
 	}
 
 	let dataArray = [];
@@ -115,7 +115,9 @@ let like = (id, isLike) => {
 			if (isLike) {
 				obj.like++;
 			} else {
-				obj.like--;
+				if (obj.like !== 0) {
+					obj.like--;
+				}
 			}
 			dataArray[i] = JSON.stringify(obj);
 			window.localStorage.setItem('data', JSON.stringify(dataArray));
