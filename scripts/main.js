@@ -4,7 +4,7 @@ let userNameMainComment = document.getElementById('main-commenter-name');
 let divCount = 1;
 // let userName;
 
-let addNewDiv = (parentId, user, time, comment, like) => {
+let addNewDiv = (id, parentId, user, time, comment, like) => {
 	var referenceNode = document.getElementById(parentId);
 	var newNode = document.createElement('div');
 	newNode.id = 'comment-' + divCount;
@@ -25,9 +25,9 @@ let addNewDiv = (parentId, user, time, comment, like) => {
                             ${comment}
                         </div>
                         <div class="col-sm-12 padding-0 details margin-top-10">
-                            <span>               ${like}                     </span>
-                            <img src="images/up-arrow.svg" class="vote margin-right-10">
-                            <img src="images/down-arrow.svg" class="vote margin-right-20">
+                            <span id="like-count-for-${id}">${like}</span>
+                            <img src="images/up-arrow.svg" class="vote margin-right-10 cursor-pointer" onClick="like(${id},true)">
+                            <img src="images/down-arrow.svg" class="vote margin-right-20 cursor-pointer" onClick="like(${id},false)">
                             <span class="margin-right-20">
                           Reply
                         </span>
@@ -64,10 +64,10 @@ let submitNewComment = () => {
 	let obj = { id: dataArray.length + 1, user: user, comment: comment, time: time, like: 0 };
 	dataArray.push(JSON.stringify(obj));
 	console.log(dataArray);
-	window.localStorage.setItem('data', JSON.stringify(dataArray) );
+	window.localStorage.setItem('data', JSON.stringify(dataArray));
 
 	console.log(comment, user);
-	addNewDiv('comments-section', user, time, comment, 0);
+	addNewDiv(dataArray.length + 1, 'comments-section', user, time, comment, 0);
 	// let user = window.localStorage.setItem('data': data);
 };
 
@@ -82,11 +82,46 @@ let getComments = () => {
 	if (data) {
 		dataArray = JSON.parse(data);
 	}
-	for (let i=0 ; i<dataArray.length;i++) {
+	for (let i = 0; i < dataArray.length; i++) {
 		let obj = dataArray[i];
+		console.log(obj);
 		obj = JSON.parse(obj);
 		console.log(obj.user);
-		addNewDiv('comments-section', obj.user, obj.time, obj.comment, 0);
+		addNewDiv(i + 1, 'comments-section', obj.user, obj.time, obj.comment, obj.like);
+	}
+};
+
+let like = (id, isLike) => {
+	let data = window.localStorage.getItem('data');
+	let likeItem = document.getElementById('like-count-for-' + id);
+
+	console.log(id);
+
+	if (isLike) {
+		likeItem.innerHTML = parseInt(likeItem.innerHTML) + 1;
+	} else {
+		likeItem.innerHTML = parseInt(likeItem.innerHTML) - 1;
+	}
+
+	let dataArray = [];
+	if (data) {
+		dataArray = JSON.parse(data);
+	}
+	for (let i = 0; i < dataArray.length; i++) {
+		if (i + 1 === id) {
+			let obj = dataArray[i];
+			obj = JSON.parse(obj);
+			console.log(obj.user);
+			if (isLike) {
+				obj.like++;
+			} else {
+				obj.like--;
+			}
+			dataArray[i] = JSON.stringify(obj);
+			window.localStorage.setItem('data', JSON.stringify(dataArray));
+
+			break;
+		}
 	}
 };
 
