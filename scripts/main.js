@@ -1,8 +1,6 @@
-// let inputMainComment = document.getElementById('main-comment');
 let submitMainComment = document.getElementById('submit-main-comment');
 let userNameMainComment = document.getElementById('main-commenter-name');
 let divCount = 1;
-// let userName;
 
 let addNewDiv = (id, parentId, user, time, comment, like) => {
 	var referenceNode = document.getElementById(parentId);
@@ -42,42 +40,29 @@ let addNewDiv = (id, parentId, user, time, comment, like) => {
 	referenceNode.after(newNode);
 };
 
-let addNewReply = (id, parentId, user, time, comment, like) => {
+let addNewReply = (parentId, user, time, comment) => {
 	var referenceNode = document.getElementById(parentId);
 	var newNode = document.createElement('div');
-	newNode.id = 'comment-' + divCount;
+	// newNode.id = 'comment-' + divCount;
 	divCount++;
 	newNode.innerHTML = `            
-			<div class="col-sm-12 margin-bottom-30">
+			<div class="col-sm-12 margin-bottom-30 margin-top-10 padding-left-0">
                     <div class="col-sm-1">
                         <img src="images/boy.svg" class="user-photo">
                     </div>
                     <div class="col-sm-11">
                         <span class="user-name">
                         ${user}
-                    </span>
-                        <span class="time-ago">
-                      ${time}
-                    </span>
+                   		 </span>
+                       
                         <div class="col-sm-12 padding-0">
                             ${comment}
                         </div>
-                        <div class="col-sm-12 padding-0 details margin-top-10">
-                            <span id="like-count-for-${id}">${like}</span>
-                            <img src="images/up-arrow.svg" class="vote margin-right-10 cursor-pointer" onClick="like(${id},true)">
-                            <img src="images/down-arrow.svg" class="vote margin-right-20 cursor-pointer" onClick="like(${id},false)">
-                            <span class="margin-right-20 cursor-pointer" onClick="reply(${id})">
-                          Reply
-                        </span>
-                            <span class="margin-right-20 cursor-pointer">
-                          Share
-                        </span>
-                        </div>
-                        <div id="replies-for-${id}"> </div>
+                        
                     </div>
-                </div>`;
+             </div>`;
 
-	referenceNode.after(newNode);
+	referenceNode.before(newNode);
 };
 
 let submitNewComment = () => {
@@ -85,10 +70,6 @@ let submitNewComment = () => {
 
 	let user = window.localStorage.getItem('userName');
 
-	// window.localStorage.setItem('userName', userName);
-
-	// let commentsSectionNode = document.getElementById("comments-section");
-	// objTo.appendChild(divtest);
 	let data = window.localStorage.getItem('data');
 
 	let dataArray = [];
@@ -183,18 +164,31 @@ let reply = id => {
 	console.log(id);
 	let referenceNode = document.getElementById('replies-for-' + id);
 	var newNode = document.createElement('div');
-	newNode.id = 'reply-input-details' + divCount;
+	newNode.id = 'reply-input-details';
 	newNode.innerHTML = `            
 			<div class="col-sm-12 margin-top-10 margin-bottom-10 padding-left-0">
                 <div class="col-sm-8 margin-bottom-10 padding-left-0">
                     <input id="reply-input" type="text" class="form-control" placeholder="Enter your reply...">
                 </div>
                 <div class="col-sm-4 margin-bottom-10">
-                    <button id="submit-reply" type="button" class="btn btn-info" onClick="submitReply()">Submit</button>
+                    <button id="submit-reply" type="button" class="btn btn-info" onClick="submitReply(${id})">Submit</button>
                 </div>
             </div>`;
 
 	referenceNode.after(newNode);
+};
+
+let submitReply = id => {
+	let commentDetails = document.getElementById('reply-input').value;
+
+	let user = window.localStorage.getItem('userName');
+	let time = new Date();
+
+	addNewReply('replies-for-' + id, user, time, commentDetails);
+	var div = document.getElementById('reply-input-details');
+	if (div) {
+		div.parentNode.removeChild(div);
+	}
 };
 
 getComments();
