@@ -2,11 +2,14 @@ let submitMainComment = document.getElementById('submit-main-comment');
 let userNameMainComment = document.getElementById('main-commenter-name');
 let divCount = 1;
 
-let addNewDiv = (id, parentId, user, time, comment, like) => {
+let addNewDiv = (id, parentId, user, time, comment, like, addedNow) => {
 	var referenceNode = document.getElementById(parentId);
 	var newNode = document.createElement('div');
 	newNode.id = 'comment-' + divCount;
 	divCount++;
+	if(addedNow){
+		time = "Just now"
+	}
 	newNode.innerHTML = `            
 			<div class="col-sm-12 margin-bottom-30">
                     <div class="col-sm-1">
@@ -87,7 +90,7 @@ let submitNewComment = () => {
 	window.localStorage.setItem('data', JSON.stringify(dataArray));
 
 	console.log(comment, user);
-	addNewDiv(dataArray.length + 1, 'comments-section', user, time, comment, 0);
+	addNewDiv(dataArray.length + 1, 'comments-section', user, time, comment, 0, true);
 	// let user = window.localStorage.setItem('data': data);
 };
 
