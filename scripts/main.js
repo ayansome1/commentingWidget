@@ -44,7 +44,6 @@ let addNewDiv = (id, parentId, user, time, comment, like, addedNow) => {
 let addNewReply = (parentId, user, time, comment) => {
 	var referenceNode = document.getElementById(parentId);
 	var newNode = document.createElement('div');
-	// newNode.id = 'comment-' + divCount;
 	divCount++;
 	newNode.innerHTML = `            
 			<div class="col-sm-12 margin-bottom-30 margin-top-10 padding-left-0">
@@ -89,7 +88,6 @@ let submitNewComment = () => {
 
 	console.log(comment, user);
 	addNewDiv(dataArray.length + 1, 'comments-section', user, time, comment, 0, true);
-	// let user = window.localStorage.setItem('data': data);
 };
 
 let setUserName = () => {
@@ -108,7 +106,6 @@ let getComments = () => {
 		console.log(obj);
 		obj = JSON.parse(obj);
 		console.log(obj.user);
-		// console.log(obj.time);
 		console.log(Date.parse(obj.time));
 
 		console.log(timeSince(Date.parse(obj.time)));
