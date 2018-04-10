@@ -15,20 +15,28 @@
     <div class="container-fluid">
         <div class="col-sm-12 padding-20">
             <div class="col-sm-12 padding-0 margin-bottom-30">
-                <div class="col-sm-8">
-                    <textarea id="main-comment" class="form-control margin-bottom-10" rows="5" placeholder="Enter comment..."> </textarea>
+                <div class="col-sm-8 margin-bottom-10">
+                    <input id="user-name" type="text" class="form-control" placeholder="Enter your name...">
                 </div>
                 <div class="col-sm-4">
-                    <div class="col-sm-12 margin-bottom-10">
-                        <input id="main-commenter-name" type="text" class="form-control" placeholder="Enter name...">
-                    </div>
-                    <div class="col-sm-12">
-                        <button id="submit-main-comment" type="button" class="btn btn-info" onClick="submitNewComment()">Submit</button>
-                    </div>
+                    <button id="submit-user-name" type="button" class="btn btn-info" onClick="setUserName()">Submit</button>
                 </div>
             </div>
+            <div class="col-sm-12 padding-0 margin-bottom-30">
+                <div class="col-sm-8">
+                    <textarea id="main-comment" class="form-control margin-bottom-10" rows="5" placeholder="Enter the comment..."> </textarea>
+                </div>
+                <div class="col-sm-4">
+                    <!-- <div class="col-sm-12 margin-bottom-10">
+                        <input id="main-commenter-name" type="text" class="form-control" placeholder="Enter name...">
+                    </div> -->
+                    <!-- <div class="col-sm-12"> -->
+                        <button id="submit-main-comment" type="button" class="btn btn-info" onClick="submitNewComment()">Submit</button>
+                    </div>
+                <!-- </div> -->
+            </div>
             <div id="comments-section">
-                <div class="col-sm-12 margin-bottom-30">
+                <!-- <div class="col-sm-12 margin-bottom-30">
                     <div class="col-sm-1">
                         <img src="images/boy.svg" class="user-photo">
                     </div>
@@ -54,7 +62,7 @@
                         </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <!--             <div class="col-sm-12 margin-bottom-30">
                 <div class="col-sm-1">
